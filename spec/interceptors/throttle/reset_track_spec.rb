@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe DHC::Throttle do
   let(:provider) { 'depay.fi' }
-  let(:limit) { 10000 }
+  let(:limit) { 10_000 }
   let(:remaining) { 1900 }
   let(:options) do
     {

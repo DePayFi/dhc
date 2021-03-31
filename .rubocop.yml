@@ -85,3 +85,6 @@ Style/BlockDelimiters:
 
 Style/Lambda:
   Enabled: false
+
+Style/ClassVars:
+  Enabled: false

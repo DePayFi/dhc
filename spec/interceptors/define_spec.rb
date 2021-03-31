@@ -7,6 +7,7 @@ describe DHC do
     before(:each) do
       class SomeInterceptor < DHC::Interceptor
       end
+
       class AnotherInterceptor < DHC::Interceptor
       end
     end
