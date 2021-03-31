@@ -5,7 +5,7 @@ class DHC::Monitoring < DHC::Interceptor
   # Options forwarded to the monitoring
   FORWARDED_OPTIONS = {
     monitoring_key: :key
-  }
+  }.freeze
 
   include ActiveSupport::Configurable
 

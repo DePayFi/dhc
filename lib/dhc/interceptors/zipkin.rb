@@ -40,7 +40,7 @@ class DHC::Zipkin < DHC::Interceptor
 
   def end_trace!
     record_status
-    record_error if !response.success?
+    record_error unless response.success?
     record_end
   end
 

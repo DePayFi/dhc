@@ -11,7 +11,7 @@ class DHC::Caching < DHC::Interceptor
   CACHE_VERSION = '1'
 
   # Options forwarded to the cache
-  FORWARDED_OPTIONS = [:expires_in, :race_condition_ttl]
+  FORWARDED_OPTIONS = %i[expires_in race_condition_ttl].freeze
 
   class MultilevelCache
 

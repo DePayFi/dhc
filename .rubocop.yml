@@ -88,3 +88,18 @@ Style/Lambda:
 
 Style/ClassVars:
   Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/CaseLikeIf:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false

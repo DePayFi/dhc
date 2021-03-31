@@ -8,7 +8,7 @@ describe DHC::Endpoint do
       endpoint = DHC::Endpoint.new('{+datastore}/v2/{campaign_id}/feedbacks')
       expect(
         endpoint.placeholders
-      ).to eq [:campaign_id, :datastore]
+      ).to eq %i[campaign_id datastore]
     end
 
     it 'allows basic auth token in url, like used on github' do

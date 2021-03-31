@@ -15,7 +15,7 @@ module DHC
         end
       end
 
-      [:get, :post, :put, :delete].each do |http_method|
+      %i[get post put delete].each do |http_method|
         define_method(http_method) do |url, options = {}|
           request(options.merge(
                     url: url,

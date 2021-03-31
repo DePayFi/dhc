@@ -102,7 +102,7 @@ class DHC::Endpoint
   # Extracts the values from url and
   # creates params according to template
   def self.values_as_params(template, url)
-    raise("#{url} does not match the template: #{template}") if !match?(url, template)
+    raise("#{url} does not match the template: #{template}") unless match?(url, template)
     new(template).values_as_params(url)
   end
 

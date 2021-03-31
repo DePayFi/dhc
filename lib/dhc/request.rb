@@ -10,7 +10,7 @@ require 'dhc/concerns/dhc/request/user_agent_concern'
 class DHC::Request
   include UserAgentConcern
 
-  TYPHOEUS_OPTIONS ||= [:params, :method, :body, :headers, :follow_location, :params_encoding]
+  TYPHOEUS_OPTIONS ||= %i[params method body headers follow_location params_encoding].freeze
 
   attr_accessor :response, :options, :raw, :format, :error_handler, :errors_ignored, :source
 
