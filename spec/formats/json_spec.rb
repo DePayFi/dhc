@@ -5,7 +5,7 @@ require 'rails_helper'
 describe DHC do
   context 'formats' do
     it 'adds Content-Type, Accept and Accept-Charset Headers to the request' do
-      stub_request(:get, "http://depay.fi/")
+      stub_request(:get, 'http://depay.fi/')
         .with(headers: {
                 'Accept' => 'application/json,application/vnd.api+json',
                 'Content-Type' => 'application/json; charset=utf-8',

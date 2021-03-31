@@ -23,12 +23,12 @@ class DHC::Caching < DHC::Interceptor
     def fetch(key)
       central_response = @central[:read].fetch(key) if @central && @central[:read].present?
       if central_response
-        puts %Q{[DHC] served from central cache: "#{key}"}
+        puts %Q([DHC] served from central cache: "#{key}")
         return central_response
       end
       local_response = @local.fetch(key) if @local
       if local_response
-        puts %Q{[DHC] served from local cache: "#{key}"}
+        puts %Q([DHC] served from local cache: "#{key}")
         return local_response
       end
     end

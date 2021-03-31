@@ -8,14 +8,14 @@ describe DHC::Endpoint do
       endpoint = DHC::Endpoint.new('{+datastore}/v2/{campaign_id}/feedbacks')
       expect(
         endpoint.compile(datastore: 'http://datastore', campaign_id: 'abc')
-      ).to eq "http://datastore/v2/abc/feedbacks"
+      ).to eq 'http://datastore/v2/abc/feedbacks'
     end
 
     it 'compiles when templates contain dots' do
       endpoint = DHC::Endpoint.new('{+datastore}/entries/{id}.json')
       expect(
         endpoint.compile(datastore: 'http://datastore', id: 123)
-      ).to eq "http://datastore/entries/123.json"
+      ).to eq 'http://datastore/entries/123.json'
     end
 
     it 'compiles complex urls containing all sort of characters' do

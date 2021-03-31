@@ -47,7 +47,7 @@ class DHC::Monitoring < DHC::Interceptor
 
   def monitor_caching_configuration_check
     return true if all_interceptor_classes.include?(DHC::Caching) && all_interceptor_classes.index(self.class) > all_interceptor_classes.index(DHC::Caching)
-    warn("[WARNING] Your interceptors must include DHC::Caching and DHC::Monitoring and also in that order.")
+    warn('[WARNING] Your interceptors must include DHC::Caching and DHC::Monitoring and also in that order.')
   end
 
   def monitor_response!

@@ -87,7 +87,7 @@ describe DHC::Zipkin do
     end
   end
 
-  %w(ZipkinTracer Trace).each do |klass|
+  %w[ZipkinTracer Trace].each do |klass|
     context "without #{klass}" do
       before(:all) do
         TemporaryClass = Object.send(:const_get, klass)
@@ -110,7 +110,7 @@ describe DHC::Zipkin do
     end
   end
 
-  %w(Annotation BinaryAnnotation Endpoint).each do |klass|
+  %w[Annotation BinaryAnnotation Endpoint].each do |klass|
     context "without Trace::#{klass}" do
       before(:all) do
         TemporaryClass = Trace.send(:const_get, klass)

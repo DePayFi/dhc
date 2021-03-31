@@ -5,7 +5,7 @@ require 'rails_helper'
 describe DHC::Error do
   context 'to_s' do
     let(:invalid) { (+"in\xc3lid").force_encoding('ASCII-8BIT') }
-    let(:valid) { "vælid" }
+    let(:valid) { 'vælid' }
 
     context 'check assumptions' do
       it 'joining raises an error' do
@@ -48,17 +48,17 @@ describe DHC::Error do
         double('DHC::Request',
                method: 'GET',
                url: 'http://example.com/sessions',
-               headers: { 'Bearer Token' => "aaaaaaaa-bbbb-cccc-dddd-eeee" },
+               headers: { 'Bearer Token' => 'aaaaaaaa-bbbb-cccc-dddd-eeee' },
                options: { followlocation: true,
-                          auth: { bearer: "aaaaaaaa-bbbb-cccc-dddd-eeee" },
-                          params: { limit: 20 }, url: "http://example.com/sessions" })
+                          auth: { bearer: 'aaaaaaaa-bbbb-cccc-dddd-eeee' },
+                          params: { limit: 20 }, url: 'http://example.com/sessions' })
       end
 
       let(:response) do
         double('DHC::Response',
                request: request,
                code: 500,
-               options: { return_code: :internal_error, response_headers: "" },
+               options: { return_code: :internal_error, response_headers: '' },
                body: '{"status":500,"message":"undefined"}')
       end
 

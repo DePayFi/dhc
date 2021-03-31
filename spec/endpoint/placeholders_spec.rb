@@ -12,18 +12,18 @@ describe DHC::Endpoint do
     end
 
     it 'allows basic auth token in url, like used on github' do
-      stub_request(:get, "https://d123token:@api.github.com/search")
+      stub_request(:get, 'https://d123token:@api.github.com/search')
         .to_return(body: {}.to_json)
       expect(-> {
-        DHC.get("https://d123token:@api.github.com/search")
+        DHC.get('https://d123token:@api.github.com/search')
       }).not_to raise_error
     end
 
     it 'allows complete basic auth (username password) in url, like used for the gemserer' do
-      stub_request(:get, "https://name:password@gemserver.com")
+      stub_request(:get, 'https://name:password@gemserver.com')
         .to_return(body: {}.to_json)
       expect(-> {
-        DHC.get("https://name:password@gemserver.com")
+        DHC.get('https://name:password@gemserver.com')
       }).not_to raise_error
     end
   end

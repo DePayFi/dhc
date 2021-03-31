@@ -5,7 +5,6 @@ require 'rails_helper'
 describe DHC do
   context 'interceptor response competition' do
     before(:each) do
-      # rubocop:disable Style/ClassVars
       class LocalCacheInterceptor < DHC::Interceptor
         @@cached = false
         cattr_accessor :cached
@@ -16,7 +15,6 @@ describe DHC do
           end
         end
       end
-      # rubocop:enable Style/ClassVars
 
       class RemoteCacheInterceptor < DHC::Interceptor
 

@@ -9,7 +9,7 @@ describe DHC::Auth do
   let!(:auth_failing) do
     stub_request(:get, 'http://depay.fi')
       .with(headers: { 'Authorization' => "Bearer #{initial_token}" })
-      .to_return(status: 401, body: "{}") # DHC::Unauthorized
+      .to_return(status: 401, body: '{}') # DHC::Unauthorized
   end
   let!(:auth_suceeding_after_recovery) do
     stub_request(:get, 'http://depay.fi')
@@ -20,14 +20,14 @@ describe DHC::Auth do
     DHC.config.interceptors = [DHC::Auth, DHC::Retry]
   end
 
-  it "recovery is attempted" do
+  it 'recovery is attempted' do
     DHC.config.endpoint(:local, 'http://depay.fi', auth: options)
     # the retried request (with updated Bearer), that should work
     DHC.get(:local)
     expect(auth_suceeding_after_recovery).to have_been_made.once
   end
 
-  it "recovery is not attempted again when the request has reauthenticated: true " do
+  it 'recovery is not attempted again when the request has reauthenticated: true ' do
     DHC.config.endpoint(:local, 'http://depay.fi', auth: options.merge(reauthenticated: true))
     expect { DHC.get(:local) }.to raise_error(DHC::Unauthorized)
   end

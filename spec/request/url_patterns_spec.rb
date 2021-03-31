@@ -19,7 +19,7 @@ describe DHC::Request do
   end
 
   it 'considers body when compiling urls' do
-    stub_request(:post, "http://datastore:8080/v2/places/123")
+    stub_request(:post, 'http://datastore:8080/v2/places/123')
     DHC.json.post('http://datastore:8080/v2/places/{id}', body: { id: 123 })
   end
 
@@ -46,7 +46,7 @@ describe DHC::Request do
     end
 
     it 'compiles url from body params when body object respond_to(:as_json)' do
-      stub_request(:post, "http://datastore/places/12345")
+      stub_request(:post, 'http://datastore/places/12345')
         .to_return(status: 200)
       DHC.post('http://datastore/places/{id}', body: data)
     end

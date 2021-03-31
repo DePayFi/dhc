@@ -27,7 +27,7 @@ describe DHC do
       DHC.configure { |c| c.interceptors = [StatsTimingInterceptor] }
     end
 
-    let(:url) { "http://depay.fi/v2/feedbacks/-Sc4_pYNpqfsudzhtivfkA" }
+    let(:url) { 'http://depay.fi/v2/feedbacks/-Sc4_pYNpqfsudzhtivfkA' }
 
     it 'can take action after a response was received' do
       allow(Services).to receive(:timing).with('web.dummy.test.get.http.depay.fi.200', 0)

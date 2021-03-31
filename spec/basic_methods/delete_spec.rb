@@ -13,7 +13,7 @@ describe DHC do
     end
 
     before(:each) do
-      stub_request(:delete, "http://datastore/v2/feedbacks/12121")
+      stub_request(:delete, 'http://datastore/v2/feedbacks/12121')
         .to_return(status: 200, body: feedback.to_json, headers: { 'Content-Encoding' => 'UTF-8' })
     end
 

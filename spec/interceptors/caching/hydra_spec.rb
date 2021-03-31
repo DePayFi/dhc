@@ -10,11 +10,11 @@ describe DHC::Caching do
   end
 
   let!(:first_request) do
-    stub_request(:get, "http://depay.fi/").to_return(body: 'Website')
+    stub_request(:get, 'http://depay.fi/').to_return(body: 'Website')
   end
 
   let!(:second_request) do
-    stub_request(:get, "http://depay.fi/weather").to_return(body: 'The weather')
+    stub_request(:get, 'http://depay.fi/weather').to_return(body: 'The weather')
   end
 
   it 'does not fetch requests served from cache when doing requests in parallel with hydra' do

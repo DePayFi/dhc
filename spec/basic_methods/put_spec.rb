@@ -19,7 +19,7 @@ describe DHC do
     end
 
     before(:each) do
-      stub_request(:put, "http://datastore/v2/feedbacks")
+      stub_request(:put, 'http://datastore/v2/feedbacks')
         .with(body: change.to_json)
         .to_return(status: 200, body: feedback.merge(change).to_json, headers: { 'Content-Encoding' => 'UTF-8' })
     end

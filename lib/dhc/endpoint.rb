@@ -64,7 +64,7 @@ class DHC::Endpoint
 
     # eliminate false positives in form:
     # http://host/feedbacks matches {+service}/{entry_id}/feedbacks (service: http:/, entry_id: host)
-    first&.match(%{https?:/$}).nil? &&
+    first&.match(%(https?:/$)).nil? &&
       # eliminates false positives in form:
       # http://host/entries/123.json matches {+service}/entries/{id} (service: http://host, id: 123.json)
       (url_format.blank? || !last&.ends_with?(url_format))

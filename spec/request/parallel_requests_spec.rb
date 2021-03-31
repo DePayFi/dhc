@@ -11,8 +11,8 @@ describe DHC::Request do
   end
 
   let(:stub_parallel_requests) do
-    stub_request(:get, "http://www.depay.fi/restaurants").to_return(status: 200, body: '1')
-    stub_request(:get, "http://www.depay.fi").to_return(status: 200, body: '2')
+    stub_request(:get, 'http://www.depay.fi/restaurants').to_return(status: 200, body: '1')
+    stub_request(:get, 'http://www.depay.fi').to_return(status: 200, body: '2')
   end
 
   it 'does parallel requests if you provide an array of requests' do

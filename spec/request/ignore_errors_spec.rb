@@ -50,13 +50,13 @@ describe DHC::Request do
   context 'does not raise exception if ignored errors is set to nil' do
     before { stub_request(:get, 'http://depay.fi').to_return(status: 404) }
 
-    it "does not raise an error when ignored errors is set to array with nil" do
+    it 'does not raise an error when ignored errors is set to array with nil' do
       expect {
         DHC.get('http://depay.fi', ignore: [nil])
       }.to raise_error(DHC::NotFound)
     end
 
-    it "does not raise an error when ignored errors is set to nil" do
+    it 'does not raise an error when ignored errors is set to nil' do
       expect {
         DHC.get('http://depay.fi', ignore: nil)
       }.to raise_error(DHC::NotFound)
@@ -66,7 +66,7 @@ describe DHC::Request do
   context 'passing keys instead of arrays' do
     before { stub_request(:get, 'http://depay.fi').to_return(status: 404) }
 
-    it "does not raise an error when ignored errors is a key instead of an array" do
+    it 'does not raise an error when ignored errors is a key instead of an array' do
       DHC.get('http://depay.fi', ignore: DHC::NotFound)
     end
   end

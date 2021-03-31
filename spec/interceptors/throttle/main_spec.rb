@@ -133,7 +133,7 @@ describe DHC::Throttle do
     describe 'calculate "remaining" in proc' do
       let(:quota_current) { 8100 }
       let(:options_remaining) do
-        ->(response) { (response.headers['limit']).to_i - (response.headers['current']).to_i }
+        ->(response) { response.headers['limit'].to_i - response.headers['current'].to_i }
       end
 
       before(:each) do

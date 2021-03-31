@@ -19,7 +19,7 @@ describe DHC::Auth do
   end
 
   it 'does not use instance variables internally so that other interceptors can still change auth options' do
-    stub_request(:get, "http://depay.fi/")
+    stub_request(:get, 'http://depay.fi/')
       .with(headers: { 'Authorization' => 'Bearer sometoken' })
       .to_return(status: 200)
     DHC.get('http://depay.fi')

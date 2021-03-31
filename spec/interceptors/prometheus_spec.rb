@@ -12,7 +12,7 @@ describe DHC::Prometheus do
     expect(Prometheus::Client).to receive(:registry).and_call_original.at_least(:once)
   end
 
-  let(:client) { double("prometheus/client") }
+  let(:client) { double('prometheus/client') }
 
   context 'registering' do
     it 'creates a counter and histogram registry in the prometheus client' do

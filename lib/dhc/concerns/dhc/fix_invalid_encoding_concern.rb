@@ -26,7 +26,7 @@ module DHC
 
         # if its STILL an issue, return an empty string :(
         if !result.valid_encoding? || !utf8?(result)
-          result = ""
+          result = ''
         end
 
         result

@@ -6,7 +6,7 @@ describe DHC do
   context 'configuration of placeholders' do
     it 'uses values for placeholders defined globally' do
       DHC.configure { |c| c.placeholder(:datastore, 'http://datastore/v2') }
-      stub_request(:get, "http://datastore/v2/feedbacks")
+      stub_request(:get, 'http://datastore/v2/feedbacks')
       DHC.get('{+datastore}/feedbacks')
     end
 

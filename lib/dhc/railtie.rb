@@ -2,7 +2,7 @@
 
 module DHC
   class Railtie < Rails::Railtie
-    initializer "dhc.configure_rails_initialization" do
+    initializer 'dhc.configure_rails_initialization' do
       DHC::Caching.cache ||= Rails.cache
     end
   end

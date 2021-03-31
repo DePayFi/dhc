@@ -61,7 +61,7 @@ describe DHC::Response do
 
   context 'response data if responding error data contains a response' do
     before do
-      stub_request(:get, "http://listings/")
+      stub_request(:get, 'http://listings/')
         .to_return(status: 404, body: {
           meta: {
             errors: [

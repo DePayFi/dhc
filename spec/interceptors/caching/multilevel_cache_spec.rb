@@ -17,7 +17,7 @@ describe DHC::Caching do
   end
 
   let!(:request_stub) do
-    stub_request(:get, "http://depay.fi/")
+    stub_request(:get, 'http://depay.fi/')
       .to_return(body: '<h1>Hi there</h1>')
   end
 

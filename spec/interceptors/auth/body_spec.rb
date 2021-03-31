@@ -8,7 +8,7 @@ describe DHC::Auth do
   end
 
   it 'adds body authentication to the existing request body' do
-    stub_request(:post, "http://depay.fi/")
+    stub_request(:post, 'http://depay.fi/')
       .with(body: {
         message: 'body',
         userToken: 'dheur5hrk3'
@@ -20,7 +20,7 @@ describe DHC::Auth do
   end
 
   it 'adds body authentication to an empty request body' do
-    stub_request(:post, "http://depay.fi/")
+    stub_request(:post, 'http://depay.fi/')
       .with(body: {
         userToken: 'dheur5hrk3'
       }.to_json)
@@ -29,7 +29,7 @@ describe DHC::Auth do
   end
 
   it 'adds nothing if request method is GET' do
-    stub_request(:get, "http://depay.fi/")
+    stub_request(:get, 'http://depay.fi/')
 
     DHC.get('http://depay.fi', auth: { body: { userToken: 'dheur5hrk3' } })
   end

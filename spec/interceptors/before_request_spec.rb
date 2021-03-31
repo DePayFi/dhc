@@ -14,7 +14,7 @@ describe DHC do
     end
 
     it 'can modify requests before they are send' do
-      stub_request(:get, "http://depay.fi/?tid=123")
+      stub_request(:get, 'http://depay.fi/?tid=123')
       DHC.get('http://depay.fi')
     end
   end

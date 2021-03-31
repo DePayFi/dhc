@@ -12,7 +12,7 @@ describe DHC::Request do
   context 'default headers' do
     context 'agent' do
       it 'sets header agent information to be DHC' do
-        stub_request(:get, "http://depay.fi/")
+        stub_request(:get, 'http://depay.fi/')
           .with(
             headers: {
               'User-Agent' => "DHC (#{DHC::VERSION}; Dummy) [https://github.com/DePayFi/dhc]"

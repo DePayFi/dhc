@@ -7,7 +7,7 @@ describe DHC do
     let(:total) { 99 }
 
     before(:each) do
-      stub_request(:get, "http://datastore/v2/feedbacks?has_reviews=true")
+      stub_request(:get, 'http://datastore/v2/feedbacks?has_reviews=true')
         .to_return(status: 200, body: { total: total }.to_json, headers: { 'Content-Encoding' => 'UTF-8' })
     end
 

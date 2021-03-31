@@ -7,7 +7,7 @@ describe DHC::Request do
     let(:encoded_data) { data.to_json }
 
     before do
-      stub_request(:post, "http://datastore/q")
+      stub_request(:post, 'http://datastore/q')
         .with(body: encoded_data)
         .to_return(status: 200)
     end
