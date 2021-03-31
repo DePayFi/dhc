@@ -1,0 +1,37 @@
+# frozen_string_literal: true
+
+class DHC::Logging < DHC::Interceptor
+
+  include ActiveSupport::Configurable
+  config_accessor :logger
+
+  def before_request
+    return unless logger
+    logger.info(
+      [
+        'Before DHC request',
+        "<#{request.object_id}>",
+        request.method.upcase,
+        "#{request.url} at #{Time.now.iso8601}",
+        "Params=#{request.params}",
+        "Headers=#{request.headers}",
+        request.source ? "\nCalled from #{request.source}" : nil
+      ].compact.join(' ')
+    )
+  end
+
+  def after_response
+    return unless logger
+    logger.info(
+      [
+        'After DHC response for request',
+        "<#{request.object_id}>",
+        request.method.upcase,
+        "#{request.url} at #{Time.now.iso8601}",
+        "Time=#{response.time_ms}ms",
+        "URL=#{response.effective_url}",
+        request.source ? "\nCalled from #{request.source}" : nil
+      ].compact.join(' ')
+    )
+  end
+end
