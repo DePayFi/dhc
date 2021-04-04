@@ -19,6 +19,6 @@ describe Hash do
   end
 
   it 'applies upcase to all values' do
-    expect(subject.deep_transform_values { |value| value.upcase }).to eq(expected_result)
+    expect(subject.deep_transform_values(&:upcase)).to eq(expected_result)
   end
 end
