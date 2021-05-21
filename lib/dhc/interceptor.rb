@@ -12,7 +12,7 @@ class DHC::Interceptor
     @request.response
   end
 
-  def before_raw_request; end
+  def before_init; end
 
   def before_request; end
 

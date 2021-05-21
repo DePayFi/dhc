@@ -941,7 +941,7 @@ config.middleware.use ZipkinTracer::RackHandler, {
 
 #### Interceptor callbacks
 
-`before_raw_request` is called before the raw typhoeus request is prepared/created.
+`before_init` is called before the raw typhoeus request has been initialized.
 
 `before_request` is called when the request is prepared and about to be executed.
 
