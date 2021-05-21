@@ -22,7 +22,7 @@ class DHC::Request
     use_configured_endpoint!
     generate_url_from_template!
     self.interceptors = DHC::Interceptors.new(self)
-    interceptors.intercept(:before_raw_request)
+    interceptors.intercept(:before_init)
     self.raw = create_request
     interceptors.intercept(:before_request)
     if self_executing && !response

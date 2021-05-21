@@ -4,7 +4,7 @@ class DHC::Auth < DHC::Interceptor
   include ActiveSupport::Configurable
   config_accessor :refresh_client_token
 
-  def before_raw_request
+  def before_init
     body_authentication! if auth_options[:body]
   end
 
