@@ -70,10 +70,7 @@ class DHC::Error < StandardError
 
     debug = []
     debug << [request.method, request.url].map { |str| self.class.fix_invalid_encoding(str) }.join(' ')
-    debug << "Options: #{request.options}"
-    debug << "Headers: #{request.headers}"
     debug << "Response Code: #{response.code} (#{response.options[:return_code]})"
-    debug << "Response Options: #{response.options}"
     debug << response.body
     debug << _message
 
