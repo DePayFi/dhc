@@ -23,7 +23,6 @@ describe DHC::Throttle do
   let(:expires_in) { (Time.zone.now + 1.hour).to_i }
 
   before(:each) do
-    DHC::Throttle.track = nil
     DHC.config.interceptors = [DHC::Throttle]
 
     stub_request(:get, 'http://depay.fi')
