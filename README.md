@@ -854,6 +854,8 @@ If it raises, it forwards the request and response object to rollbar, which cont
 
 The throttle interceptor allows you to raise an exception if a predefined quota of a provider request limit is reached in advance.
 
+The throttle state (tracker) is stored in Rails.cache.
+
 ```ruby
   DHC.configure do |c|
     c.interceptors = [DHC::Throttle]
@@ -889,10 +891,33 @@ DHC.get('http://depay.fi', options)
 * `remaining`:
   * a hash pointing at the response header containing the current amount of remaining requests
   * a proc that receives the response as argument and returns the current amount of remaining requests
+  * not set: will track remaining by counting down limit until `expires`
 * `expires`:
   * a hash pointing at the response header containing the timestamp when the quota will reset
   * a proc that receives the response as argument and returns the timestamp when the quota will reset
+  * an ActiveSupport::Duration e.g. 1.minute
 
+Example for throttling manually without relating to any information in the response:
+
+```ruby
+options = {
+  throttle: {
+    track: true,
+    break: '80%',
+    provider: 'depay.fi',
+    limit: 100,
+    expires: 1.minute
+  }
+}
+
+DHC.get('http://depay.fi', options)
+```
+
+Will reset every minute, and will allow up to 80 requests per minute. The 81st request attempt within a minute will raise:
+
+```ruby
+DHC::Throttle::OutOfQuota: Reached predefined quota for depay.fi
+```
 
 #### Zipkin
 

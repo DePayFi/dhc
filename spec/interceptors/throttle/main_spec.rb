@@ -25,8 +25,8 @@ describe DHC::Throttle do
   end
 
   before(:each) do
-    DHC::Throttle.track = nil
     DHC.config.interceptors = [DHC::Throttle]
+    Rails.cache.write(DHC::Throttle::CACHE_KEY, nil)
 
     stub_request(:get, 'http://depay.fi').to_return(
       headers: { 'limit' => quota_limit, 'remaining' => quota_remaining, 'reset' => quota_reset }
@@ -35,8 +35,8 @@ describe DHC::Throttle do
 
   it 'tracks the request limits based on response data' do
     DHC.get('http://depay.fi', options)
-    expect(DHC::Throttle.track[provider][:limit]).to eq quota_limit
-    expect(DHC::Throttle.track[provider][:remaining]).to eq quota_remaining
+    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:limit]).to eq quota_limit
+    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:remaining]).to eq quota_remaining
   end
 
   context 'fix predefined integer for limit' do
@@ -44,7 +44,7 @@ describe DHC::Throttle do
 
     it 'tracks the limit based on initialy provided data' do
       DHC.get('http://depay.fi', options)
-      expect(DHC::Throttle.track[provider][:limit]).to eq options_limit
+      expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:limit]).to eq options_limit
     end
   end
 
