@@ -35,8 +35,8 @@ describe DHC::Throttle do
 
   it 'tracks the request limits based on response data' do
     DHC.get('http://depay.fi', options)
-    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:limit]).to eq quota_limit
-    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:remaining]).to eq quota_remaining
+    expect(Rails.cache.read('DHC/throttle/tracker/v1')[provider][:limit]).to eq quota_limit
+    expect(Rails.cache.read('DHC/throttle/tracker/v1')[provider][:remaining]).to eq quota_remaining
   end
 
   context 'fix predefined integer for limit' do
@@ -44,7 +44,7 @@ describe DHC::Throttle do
 
     it 'tracks the limit based on initialy provided data' do
       DHC.get('http://depay.fi', options)
-      expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:limit]).to eq options_limit
+      expect(Rails.cache.read('DHC/throttle/tracker/v1')[provider][:limit]).to eq options_limit
     end
   end
 

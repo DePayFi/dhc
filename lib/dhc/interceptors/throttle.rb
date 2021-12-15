@@ -6,7 +6,7 @@ class DHC::Throttle < DHC::Interceptor
   class OutOfQuota < StandardError
   end
 
-  CACHE_KEY = "DHC/throttle/tracker/v1"
+  CACHE_KEY = 'DHC/throttle/tracker/v1'
 
   class << self
 
@@ -45,7 +45,7 @@ class DHC::Throttle < DHC::Interceptor
   end
 
   def track?
-    ( options.dig(:remaining) && [options.dig(:track), response.headers].none?(&:blank?) ||
+    (options.dig(:remaining) && [options.dig(:track), response.headers].none?(&:blank?) ||
       options.dig(:track).present?
     )
   end
@@ -87,7 +87,7 @@ class DHC::Throttle < DHC::Interceptor
       elsif options.dig(:remaining).blank?
         remaining_before = self.class.tracker(provider).dig(:remaining) || request.options.dig(:throttle, :limit)
         expires = self.class.tracker(provider).dig(:expires)
-        if(expires && expires > DateTime.now)
+        if expires && expires > DateTime.now
           remaining_before - 1
         else
           request.options.dig(:throttle, :limit) - 1
@@ -99,18 +99,16 @@ class DHC::Throttle < DHC::Interceptor
   def expires
     @expires ||= begin
       if options.dig(:expires).is_a?(ActiveSupport::Duration) && self.class.tracker(provider).dig(:expires).present?
-        if(self.class.tracker(provider)[:expires] > DateTime.now)
+        if self.class.tracker(provider)[:expires] > DateTime.now
           self.class.tracker(provider)[:expires]
         else
           DateTime.now + options.dig(:expires)
         end
-      else
+      elsif options.dig(:expires).is_a?(Hash) && options.dig(:expires, :header)
 
-        if options.dig(:expires).is_a?(Hash) && options.dig(:expires, :header)
-          convert_expire_value(response.headers[options.dig(:expires, :header)]) if response.headers
-        else
-          convert_expire_value(options.dig(:expires))
-        end
+        convert_expire_value(response.headers[options.dig(:expires, :header)]) if response.headers
+      else
+        convert_expire_value(options.dig(:expires))
       end
     end
   end

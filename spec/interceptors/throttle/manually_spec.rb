@@ -28,8 +28,8 @@ describe DHC::Throttle do
 
   it 'tracks the request limits based on response data' do
     DHC.get('http://depay.fi', options)
-    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:limit]).to eq 100
-    expect(Rails.cache.read("DHC/throttle/tracker/v1")[provider][:remaining]).to eq quota_limit-1
+    expect(Rails.cache.read('DHC/throttle/tracker/v1')[provider][:limit]).to eq 100
+    expect(Rails.cache.read('DHC/throttle/tracker/v1')[provider][:remaining]).to eq quota_limit - 1
   end
 
   context 'breaks' do
@@ -37,7 +37,7 @@ describe DHC::Throttle do
     let(:break_after) { '79%' }
 
     it 'hit the breaks if throttling quota is reached' do
-      8.times do 
+      8.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(
@@ -50,7 +50,7 @@ describe DHC::Throttle do
       let(:break_after) { '80%' }
 
       it 'does not hit the breaks' do
-        9.times do 
+        9.times do
           DHC.get('http://depay.fi', options)
         end
       end
@@ -62,7 +62,7 @@ describe DHC::Throttle do
     let(:quota_limit) { 10 }
 
     it 'attempts another request if the quota expired' do
-      9.times do 
+      9.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(
@@ -70,7 +70,7 @@ describe DHC::Throttle do
         'Reached predefined quota for depay.fi'
       )
       Timecop.travel(Time.zone.now + 1.minute)
-      9.times do 
+      9.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(
