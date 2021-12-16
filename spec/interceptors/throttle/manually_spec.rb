@@ -79,4 +79,23 @@ describe DHC::Throttle do
       )
     end
   end
+
+  context 'multiple provider' do
+
+    it 'tracks multiple providers without a problem' do
+      DHC.get('http://depay.fi', options)
+      stub_request(:get, 'http://depay.app').to_return(status: 200)
+      DHC.get('http://depay.app', {
+        throttle: {
+          provider: 'depay.app',
+          track: true,
+          limit: quota_limit,
+          expires: 1.minute,
+          break: break_after
+        }
+      })
+      expect(Rails.cache.read('DHC/throttle/tracker/v1')['depay.fi']).to be_present
+      expect(Rails.cache.read('DHC/throttle/tracker/v1')['depay.app']).to be_present
+    end
+  end
 end

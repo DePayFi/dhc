@@ -15,7 +15,7 @@ class DHC::Throttle < DHC::Interceptor
     end
 
     def tracker=(track)
-      Rails.cache.write(CACHE_KEY, tracker(track[:provider]).merge({ track[:provider] => track }))
+      Rails.cache.write(CACHE_KEY, (Rails.cache.read(CACHE_KEY) || {}).merge({ track[:provider] => track }))
     end
   end
 
