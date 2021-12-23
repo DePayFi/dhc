@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'prometheus-client', '~> 0.7.1'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rails', '>= 5.2'
+  s.add_development_dependency 'rails', '>= 5.2' , '< 7'
   s.add_development_dependency 'redis'
   s.add_development_dependency 'rspec-rails', '>= 3.0.0'
   s.add_development_dependency 'rubocop'
