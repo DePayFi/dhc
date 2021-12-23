@@ -46,8 +46,8 @@ describe DHC::Caching do
     it 'serves a response from local cache without trying the central cache' do
       expect(Rails.cache).to receive(:fetch).at_least(:once).and_call_original
       expect(Rails.cache).to receive(:write).and_call_original
-      expect(-> { response_has_been_cached_and_served_from_cache! })
-        .to output(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+      expect(DHC::Logger).to receive(:info).with(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+      response_has_been_cached_and_served_from_cache!
     end
   end
 
@@ -67,8 +67,8 @@ describe DHC::Caching do
         expect(redis_cache).to receive(:write).and_return(true)
         expect(Rails.cache).to receive(:fetch).and_call_original
         expect(Rails.cache).to receive(:write).and_call_original
-        expect(-> { response_has_been_cached_and_served_from_cache! })
-          .to output(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+        expect(DHC::Logger).to receive(:info).with(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+        response_has_been_cached_and_served_from_cache!
       end
     end
 
@@ -78,8 +78,8 @@ describe DHC::Caching do
         expect(redis_cache).to receive(:write).and_return(true)
         expect(Rails.cache).to receive(:fetch).at_least(:once).and_call_original
         expect(Rails.cache).to receive(:write).and_call_original
-        expect(-> { response_has_been_cached_and_served_from_cache! })
-          .to output(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+        expect(DHC::Logger).to receive(:info).with(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+        response_has_been_cached_and_served_from_cache!
       end
     end
   end
@@ -97,8 +97,8 @@ describe DHC::Caching do
       expect(redis_cache).not_to receive(:write)
       expect(Rails.cache).to receive(:fetch).and_call_original
       expect(Rails.cache).to receive(:write).and_call_original
-      expect(-> { response_has_been_cached_and_served_from_cache! })
-        .to output(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+      expect(DHC::Logger).to receive(:info).with(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+      response_has_been_cached_and_served_from_cache!
     end
   end
 
@@ -115,8 +115,8 @@ describe DHC::Caching do
       expect(redis_cache).to receive(:write).and_return(true)
       expect(Rails.cache).to receive(:fetch).at_least(:once).and_call_original
       expect(Rails.cache).to receive(:write).and_call_original
-      expect(-> { response_has_been_cached_and_served_from_cache! })
-        .to output(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+      expect(DHC::Logger).to receive(:info).with(%{[DHC] served from local cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+      response_has_been_cached_and_served_from_cache!
     end
   end
 
@@ -132,8 +132,8 @@ describe DHC::Caching do
     it 'does not inquire the local cache for information neither to write them' do
       expect(redis_cache).to receive(:fetch).and_return(nil, body: '<h1>Hi there</h1>', code: 200, headers: nil, return_code: nil, mock: :webmock)
       expect(redis_cache).to receive(:write).and_return(true)
-      expect(-> { response_has_been_cached_and_served_from_cache! })
-        .to output(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"\n}).to_stdout
+      expect(DHC::Logger).to receive(:info).with(%{[DHC] served from central cache: "DHC_CACHE(v1): GET http://depay.fi"}).and_call_original
+      response_has_been_cached_and_served_from_cache!
     end
   end
 end

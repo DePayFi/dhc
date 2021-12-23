@@ -72,6 +72,7 @@ module DHC
   autoload :Response, 'dhc/response'
   autoload :Rollbar, 'dhc/interceptors/rollbar'
   autoload :Zipkin, 'dhc/interceptors/zipkin'
+  autoload :Logger, 'dhc/logger'
 
   require 'dhc/railtie' if defined?(Rails)
 end
