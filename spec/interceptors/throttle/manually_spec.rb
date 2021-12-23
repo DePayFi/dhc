@@ -33,11 +33,11 @@ describe DHC::Throttle do
   end
 
   context 'breaks' do
-    let(:quota_limit) { 10 }
+    let(:quota_limit) { 100 }
     let(:break_after) { '79%' }
 
     it 'hit the breaks if throttling quota is reached' do
-      8.times do
+      79.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(
@@ -50,19 +50,29 @@ describe DHC::Throttle do
       let(:break_after) { '80%' }
 
       it 'does not hit the breaks' do
-        9.times do
+        80.times do
           DHC.get('http://depay.fi', options)
         end
+      end
+
+      it 'does hit the breaks surpassing quota' do
+        80.times do
+          DHC.get('http://depay.fi', options)
+        end
+        expect { DHC.get('http://depay.fi', options) }.to raise_error(
+          DHC::Throttle::OutOfQuota,
+          'Reached predefined quota for depay.fi'
+        )
       end
     end
   end
 
   context 'expires' do
     let(:break_after) { '80%' }
-    let(:quota_limit) { 10 }
+    let(:quota_limit) { 100 }
 
     it 'attempts another request if the quota expired' do
-      9.times do
+      80.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(
@@ -70,7 +80,7 @@ describe DHC::Throttle do
         'Reached predefined quota for depay.fi'
       )
       Timecop.travel(Time.zone.now + 1.minute)
-      9.times do
+      80.times do
         DHC.get('http://depay.fi', options)
       end
       expect { DHC.get('http://depay.fi', options) }.to raise_error(

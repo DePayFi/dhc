@@ -59,7 +59,7 @@ class DHC::Throttle < DHC::Interceptor
       remaining = tracker[:remaining] * 100
       limit = tracker[:limit]
       remaining_quota = 100 - options[:break].to_i
-      remaining < remaining_quota * limit
+      remaining <= remaining_quota * limit
     end
   end
 
