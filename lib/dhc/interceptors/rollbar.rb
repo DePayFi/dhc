@@ -28,7 +28,7 @@ class DHC::Rollbar < DHC::Interceptor
     }.merge additional_params
     begin
       Rollbar.warning("Status: #{response.code} URL: #{request.url}", data)
-    rescue Encoding::UndefinedConversionError
+    rescue JSON::GeneratorError
       sanitized_data = data.deep_transform_values { |value| self.class.fix_invalid_encoding(value) }
       Rollbar.warning("Status: #{response.code} URL: #{request.url}", sanitized_data)
     end

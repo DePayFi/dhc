@@ -6,6 +6,7 @@ class DHC::Auth < DHC::Interceptor
 
   def before_init
     body_authentication! if auth_options[:body]
+    auth_options[:refresh].call if refresh_bearer?
   end
 
   def before_request
@@ -14,12 +15,22 @@ class DHC::Auth < DHC::Interceptor
   end
 
   def after_response
-    return unless configuration_correct?
-    return unless reauthenticate?
-    reauthenticate!
+    reauthenticate! if configuration_correct? && reauthenticate?
+    retry_with_refreshed_token! if retry_with_refreshed_token?
   end
 
   private
+
+  def refresh_bearer?
+    auth_options[:bearer] &&
+      auth_options[:refresh].is_a?(Proc) &&
+      bearer_expired?(auth_options[:expires_at])
+  end
+
+  def bearer_expired?(expires_at)
+    expires_at = DateTime.parse(expires_at) if expires_at.is_a?(String)
+    expires_at < DateTime.now+1.minute
+  end
 
   def body_authentication!
     auth = auth_options[:body]
@@ -63,6 +74,19 @@ class DHC::Auth < DHC::Interceptor
       !auth_options[:reauthenticated] &&
       bearer_header_present? &&
       DHC::Error.find(response) == DHC::Unauthorized
+  end
+
+  def retry_with_refreshed_token!
+    bearer_authentication!
+    new_options = request.options.dup
+    new_options = new_options.merge(retry: { max: 1 })
+    request.options = new_options
+  end
+
+  def retry_with_refreshed_token?
+    auth_options[:bearer] &&
+      auth_options[:refresh].is_a?(Proc) &&
+      auth_options[:refresh].call(response)
   end
 
   def bearer_header_present?

@@ -471,6 +471,27 @@ Adds the following header to the request:
 
 Assuming the method `access_token` responds on runtime of the request with `123456`.
 
+###### Refresh Bearer Authentication
+
+If you configure `expires_at` and `refresh` proc in addition to `bearer`, DHC will refresh the bearer token using the defined `refresh` proc in two cases:
+
+1. before the request if `expires_at` < `DateTime.now + 1.minute`
+2. if the request fails and `refresh(response)` responds to true
+
+```ruby
+refresh = ->(response = nil){
+  if response
+    if response.code == 401 && response.data && response.data.error_code == 'ACCESS_TOKEN_EXPIRED'
+      session[:access_token] = new_access_token
+    end
+  else
+    session[:access_token] = new_access_token
+  end
+}
+
+DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: DateTime.now + 1.day })
+```
+
 ##### Basic Authentication
 
 ```ruby

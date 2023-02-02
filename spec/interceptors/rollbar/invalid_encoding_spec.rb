@@ -14,7 +14,7 @@ describe DHC::Rollbar do
       class Rollbar; end
       ::Rollbar.stub(:warning) do
         call_counter += 1
-        raise Encoding::UndefinedConversionError if call_counter == 1
+        raise JSON::GeneratorError if call_counter == 1
       end
 
       # the response for the caller is still DHC::BadRequest
@@ -24,7 +24,7 @@ describe DHC::Rollbar do
     let(:invalid) { (+"in\xc3lid").force_encoding('ASCII-8BIT') }
     let(:valid) { described_class.fix_invalid_encoding(invalid) }
 
-    it 'calls fix_invalid_encoding incase a Encoding::UndefinedConversionError was encountered' do
+    it 'calls fix_invalid_encoding incase a JSON::GeneratorError was encountered' do
       expect(described_class).to have_received(:fix_invalid_encoding).with(invalid)
     end
 
