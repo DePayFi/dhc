@@ -50,14 +50,14 @@ describe DHC::Auth do
 
     it 'refreshes the bearer if it expired' do
       stub_request(:get, 'http://depay.fi/').with(headers: { 'Authorization' => 'Bearer 2_ACCESS_TOKEN' })
-      DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: (DateTime.now - 1.minute).to_s })
+      DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: -> { (DateTime.now - 1.minute).to_s } })
     end
 
     it 'can evaluate response errors (like unauthorized) inside the refresh proc' do
       stub_request(:get, 'http://depay.fi/').with(headers: { 'Authorization' => 'Bearer 2_ACCESS_TOKEN' })
         .to_return(status: 401, body: { "error_code": 'ACCESS_TOKEN_EXPIRED' }.to_json)
       stub_request(:get, 'http://depay.fi/').with(headers: { 'Authorization' => 'Bearer 3_ACCESS_TOKEN' })
-      DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: (DateTime.now - 1.minute).to_s })
+      DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: -> { (DateTime.now - 1.minute).to_s } })
     end
   end
 end

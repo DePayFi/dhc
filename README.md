@@ -475,7 +475,7 @@ Assuming the method `access_token` responds on runtime of the request with `1234
 
 If you configure `expires_at` and `refresh` proc in addition to `bearer`, DHC will refresh the bearer token using the defined `refresh` proc in two cases:
 
-1. before the request if `expires_at` < `DateTime.now + 1.minute`
+1. before the request if `expires_at.call` < `DateTime.now + 1.minute`
 2. if the request fails and `refresh(response)` responds to true
 
 ```ruby
@@ -489,7 +489,7 @@ refresh = ->(response = nil){
   end
 }
 
-DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: DateTime.now + 1.day })
+DHC.get('http://depay.fi', auth: { bearer: -> { session[:access_token] }, refresh: refresh, expires_at: -> { session[:expires_at] } })
 ```
 
 ##### Basic Authentication

@@ -28,6 +28,7 @@ class DHC::Auth < DHC::Interceptor
   end
 
   def bearer_expired?(expires_at)
+    expires_at = expires_at.call if expires_at.is_a?(Proc)
     expires_at = DateTime.parse(expires_at) if expires_at.is_a?(String)
     expires_at < DateTime.now + 1.minute
   end
