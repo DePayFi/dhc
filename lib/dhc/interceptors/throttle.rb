@@ -45,9 +45,8 @@ class DHC::Throttle < DHC::Interceptor
   end
 
   def track?
-    (options.dig(:remaining) && [options.dig(:track), response.headers].none?(&:blank?) ||
+    options.dig(:remaining) && [options.dig(:track), response.headers].none?(&:blank?) ||
       options.dig(:track).present?
-    )
   end
 
   def break?

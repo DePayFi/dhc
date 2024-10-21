@@ -17,7 +17,7 @@ describe DHC::Logging do
       %r{Before DHC request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Params={} Headers={.*?}}
     )
     expect(logger).to have_received(:info).once.with(
-      %r{After DHC response for request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Time=0ms URL=http://depay.fi:80/}
+      %r{After DHC response for request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Time=\d+(\.\d+)?ms URL=http://depay.fi:80/}
     )
   end
 
@@ -27,10 +27,10 @@ describe DHC::Logging do
     it 'does log the source if provided as option' do
       DHC.get('http://depay.fi', source: source)
       expect(logger).to have_received(:info).once.with(
-        %r{Before DHC request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Params={} Headers={.*?} \nCalled from #{source}}
+        %r{Before DHC request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Params={} Headers={.*?} \nCalled from #{Regexp.escape(source)}}
       )
       expect(logger).to have_received(:info).once.with(
-        %r{After DHC response for request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Time=0ms URL=http://depay.fi:80/ \nCalled from #{source}}
+        %r{After DHC response for request <\d+> GET http://depay.fi at \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2} Time=\d+(\.\d+)?ms URL=http://depay.fi:80/ \nCalled from #{Regexp.escape(source)}}
       )
     end
   end

@@ -14,7 +14,7 @@ describe DHC::Response do
       let(:body) { { some_key: { nested: value } } }
 
       it 'makes data from response body available' do
-        expect(response.data.dig("some_key", "nested")).to eq value
+        expect(response.data.dig('some_key', 'nested')).to eq value
       end
 
       it 'can be converted to json with the as_json method' do
@@ -22,7 +22,7 @@ describe DHC::Response do
       end
 
       it 'returns nil when data is not available' do
-        expect(response.data["something"]).to be_nil
+        expect(response.data['something']).to be_nil
       end
     end
 
@@ -34,7 +34,7 @@ describe DHC::Response do
       end
 
       it 'makes item data from response body available' do
-        expect(response.data.dig(0, "some_key", "nested")).to eq value
+        expect(response.data.dig(0, 'some_key', 'nested')).to eq value
       end
     end
   end
@@ -57,7 +57,7 @@ describe DHC::Response do
         DHC.get('http://listings')
       rescue DHC::Error => error
         expect(
-          error.response.request.response.data.dig("meta", "errors").detect { |item| item["code"] == 2000 }['msg']
+          error.response.request.response.data.dig('meta', 'errors').detect { |item| item['code'] == 2000 }['msg']
         ).to eq 'I like to hide error messages (this is meta).'
       end
     end
