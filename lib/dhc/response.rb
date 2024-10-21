@@ -5,7 +5,6 @@ require 'active_support/core_ext/module'
 # The response contains the raw response (typhoeus)
 # and provides functionality to access response data.
 class DHC::Response
-  autoload :Data, 'dhc/response/data'
 
   attr_accessor :request, :body_replacement
   attr_reader :from_cache
@@ -23,7 +22,7 @@ class DHC::Response
   end
 
   def data
-    @data ||= body.present? ? DHC::Response::Data.new(self) : nil
+    @data ||= body.present? ? JSON.parse(body) : nil
   end
 
   def [](key)

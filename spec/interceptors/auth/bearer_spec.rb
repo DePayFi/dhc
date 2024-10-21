@@ -39,7 +39,7 @@ describe DHC::Auth do
     before do
       refresh = ->(response = nil) {
         if response
-          if response.code == 401 && response.data && response.data.error_code == 'ACCESS_TOKEN_EXPIRED'
+          if response.code == 401 && response.data && response.data['error_code'] == 'ACCESS_TOKEN_EXPIRED'
             session[:access_token] = third_access_token
           end
         else

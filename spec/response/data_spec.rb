@@ -14,23 +14,15 @@ describe DHC::Response do
       let(:body) { { some_key: { nested: value } } }
 
       it 'makes data from response body available' do
-        expect(response.data.some_key.nested).to eq value
-      end
-
-      it 'makes data from response body available with hash bracket notation' do
-        expect(response.data[:some_key][:nested]).to eq value
+        expect(response.data.dig("some_key", "nested")).to eq value
       end
 
       it 'can be converted to json with the as_json method' do
         expect(response.data.as_json).to eq body.as_json
       end
 
-      it 'can be converted to an open struct with the as_open_struct method' do
-        expect(response.data.as_open_struct).to eq JSON.parse(response.body, object_class: OpenStruct)
-      end
-
       it 'returns nil when data is not available' do
-        expect(response.data.something).to be_nil
+        expect(response.data["something"]).to be_nil
       end
     end
 
@@ -41,20 +33,8 @@ describe DHC::Response do
         expect(response.data.as_json).to eq body.as_json
       end
 
-      it 'can be converted to an open struct with the as_open_struct method' do
-        expect(response.data.as_open_struct).to eq JSON.parse(response.body, object_class: OpenStruct)
-      end
-
-      it 'is a collection of items' do
-        expect(response.data.size).to eq(1)
-      end
-
       it 'makes item data from response body available' do
-        expect(response.data.first.some_key.nested).to eq value
-      end
-
-      it 'makes item data from response body available with hash bracket notation' do
-        expect(response.data.first[:some_key][:nested]).to eq value
+        expect(response.data.dig(0, "some_key", "nested")).to eq value
       end
     end
   end
@@ -77,7 +57,7 @@ describe DHC::Response do
         DHC.get('http://listings')
       rescue DHC::Error => error
         expect(
-          error.response.request.response.data.meta.errors.detect { |item| item.code == 2000 }.msg
+          error.response.request.response.data.dig("meta", "errors").detect { |item| item["code"] == 2000 }['msg']
         ).to eq 'I like to hide error messages (this is meta).'
       end
     end

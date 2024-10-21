@@ -59,7 +59,7 @@ describe DHC::Request do
     it 'requests json and parses response body' do
       expect(-> {
         DHC.json.get('http://datastore/v2/feedbacks').data
-      }).to raise_error(DHC::ParserError)
+      }).to raise_error(JSON::ParserError)
     end
   end
 
@@ -75,14 +75,14 @@ describe DHC::Request do
       stub_request(:get, 'http://something').to_return(status: 400)
       handler = ->(_response) { { name: 'unknown' }.to_json }
       request = DHC::Request.new(url: 'http://something', rescue: handler)
-      expect(request.response.data.name).to eq 'unknown'
+      expect(request.response.data['name']).to eq 'unknown'
     end
 
     it 'does not exchange body with handlers return if the handler returns nil' do
       stub_request(:get, 'http://something').to_return(status: 400, body: { message: 'an error occurred' }.to_json)
       handler = ->(_response) { nil }
       request = DHC::Request.new(url: 'http://something', rescue: handler)
-      expect(request.response.data.message).to eq 'an error occurred'
+      expect(request.response.data['message']).to eq 'an error occurred'
     end
   end
 end

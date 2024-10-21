@@ -35,9 +35,9 @@ describe DHC do
       DHC.put(:feedbacks, body: change)
     end
 
-    it 'makes response data available in a rails way' do
+    it 'makes response data available' do
       response = DHC.put('http://datastore/v2/feedbacks', body: change)
-      expect(response.data.recommended).to eq false
+      expect(response.data['recommended']).to eq false
     end
 
     it 'provides response headers' do

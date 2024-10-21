@@ -22,7 +22,7 @@ describe DHC do
 
     it 'makes data accessible with square bracket accessor (symbol)' do
       expect(
-        DHC.json.get('http://depay.fi')[:MyProp]
+        DHC.json.get('http://depay.fi')['MyProp']
       ).to eq 'MyValue'
     end
   end

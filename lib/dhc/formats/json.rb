@@ -48,8 +48,6 @@ module DHC::Formats
 
     def parse(input, object_class)
       ::JSON.parse(input, object_class: object_class)
-    rescue ::JSON::ParserError => e
-      raise DHC::ParserError.new(e.message, input)
     end
   end
 end

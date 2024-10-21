@@ -24,9 +24,9 @@ describe DHC do
       DHC.get(:feedbacks, params: parameters)
     end
 
-    it 'makes response data available in a rails way' do
+    it 'makes response data available' do
       response = DHC.get('http://datastore/v2/feedbacks', params: parameters)
-      expect(response.data.total).to eq 99
+      expect(response.data['total']).to eq 99
     end
 
     it 'provides response headers' do
@@ -43,7 +43,7 @@ describe DHC do
 
     it 'requests json and parses response body' do
       data = DHC.json.get('http://datastore/v2/feedbacks').data
-      expect(data.some).to eq 'json'
+      expect(data['some']).to eq 'json'
     end
   end
 end

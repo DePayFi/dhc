@@ -29,9 +29,9 @@ describe DHC do
       DHC.post(:feedbacks, body: feedback)
     end
 
-    it 'makes response data available in a rails way' do
+    it 'makes response data available' do
       response = DHC.post('http://datastore/v2/feedbacks', body: feedback)
-      expect(response.data.source_id).to eq 'aaa'
+      expect(response.data['source_id']).to eq 'aaa'
     end
 
     it 'provides response headers' do

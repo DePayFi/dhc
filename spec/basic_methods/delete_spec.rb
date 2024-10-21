@@ -21,9 +21,9 @@ describe DHC do
       DHC.delete('http://datastore/v2/feedbacks/12121')
     end
 
-    it 'makes response data available in a rails way' do
+    it 'makes response data available' do
       response = DHC.delete('http://datastore/v2/feedbacks/12121')
-      expect(response.data.recommended).to eq true
+      expect(response.data['recommended']).to eq true
     end
 
     it 'provides response headers' do

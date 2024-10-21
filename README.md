@@ -21,8 +21,8 @@ use it like:
 
 ```ruby
   response = DHC.get('http://datastore/v2/feedbacks')
-  response.data.items[0]
-  response.data.items[0].recommended
+  response.data.dig('items', 0)
+  response.data.dig('items', 0, 'recommended')
   response.body
   response.headers
 ```
@@ -236,8 +236,8 @@ User-Agent DHC (9.4.2; MyRailsApplicationName) [https://github.com/DePayFi/dhc]
 ```ruby
   response.request #<DHC::Request> the associated request.
 
-  response.data #<OpenStruct> in case response body contains parsable JSON.
-  response.data.something.nested
+  response.data # JSON
+  response.data.dig('something', 'nested')
 
   response.body #<String>
 
@@ -256,9 +256,6 @@ The response data can be access with dot-notation and square-bracket notation. Y
 
 ```ruby
   response = DHC.request(url: 'http://datastore/entry/1')
-  response.data.as_open_struct #<OpenStruct name='depay.fi'>
-  response.data.as_json # { name: 'depay.fi' }
-  response.data.name # 'depay.fi'
   response.data[:name] # 'depay.fi'
 ```
 
@@ -347,7 +344,7 @@ If your error handler returns anything else but `nil` it replaces the response b
 ```ruby
 handler = ->(response){ do_something_with_response; return {name: 'unknown'} }
 response = DHC.get('http://something', rescue: handler)
-response.data.name # 'unknown'
+response.data[:name] # 'unknown'
 ```
 
 ### Ignore certain errors
@@ -481,7 +478,7 @@ If you configure `expires_at` and `refresh` proc in addition to `bearer`, DHC wi
 ```ruby
 refresh = ->(response = nil){
   if response
-    if response.code == 401 && response.data && response.data.error_code == 'ACCESS_TOKEN_EXPIRED'
+    if response.code == 401 && response.data && response.data[:error_code] == 'ACCESS_TOKEN_EXPIRED'
       session[:access_token] = new_access_token
     end
   else
